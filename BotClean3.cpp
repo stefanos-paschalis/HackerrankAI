@@ -2,8 +2,8 @@
 // Created by stefa on 4/3/2020.
 //
 #include<iostream>
-#include<string>
 #include<vector>
+#include<string>
 #include<map>
 #include<cmath>
 using namespace std;
@@ -187,11 +187,11 @@ int main() {
     board.push_back("--dd-");
     board.push_back("dd--d");*/
 
-    board.push_back("d-d-d");
-    board.push_back("-d--d");
-    board.push_back("d-ddd-");
-    board.push_back("--dd-");
-    board.push_back("dd--d");
+    board.push_back("d---d");
+    board.push_back("-----");
+    board.push_back("--d--");
+    board.push_back("-----");
+    board.push_back("d---d");
 
     Point bot(row, col);
     Game game;
