@@ -41,13 +41,12 @@ struct Point {
 struct Game {
     Game(){}
     void print_grid(vector<string> grid) {
-        cout << "grid --------------------" << endl;
         for(int i=0; i<grid.size(); i++) {
             cout << grid[i] << endl;
         }
     }
     void print_cell(Point p) {
-        cout << "cell: " << p.row << ", " << p.col << endl;
+        cout << p.row << " " << p.col << endl;
     }
     vector<char> get_distinct_colors(vector<string> &grid) {
         vector<char> colors;
@@ -118,7 +117,7 @@ struct Game {
             }
         }
     }
-    void falling_cells(vector<string> &grid) {
+    void down_falling_cells(vector<string> &grid) {
         vector<string> new_grid;
         for(int r=0; r<grid.size(); r++) {
             string line;
@@ -136,6 +135,35 @@ struct Game {
             }
         }
         grid = new_grid;
+        new_grid.clear();
+        for(int r=0; r<grid.size(); r++) {
+            bool row_empty = true;
+            for(int c=0; c<grid[r].length(); c++) {
+                if (grid[r][c] != '-') {
+                    row_empty = false;
+                }
+            }
+            if (row_empty == false) {
+                new_grid.push_back(grid[r]);
+            }
+        }
+        grid = new_grid;
+    }
+    void left_falling_cells(vector<string> &grid) {
+        for(int c=0; c<grid[0].length(); c++) {
+            bool column_empty = true;
+            for(int r=0; r<grid.size(); r++) {
+                if (grid[r][c] != '-') {
+                    column_empty = false;
+                }
+            }
+            if (column_empty == true) {
+                for(int r=0; r<grid.size(); r++) {
+                    grid[r].erase(c, 1);
+                }
+                c--;
+            }
+        }
     }
     int get_cells(vector<string> &grid) {
         int result = 0;
@@ -156,7 +184,8 @@ struct Game {
             Point cell = next_move(rows, cols, num_colors, grid);
             print_cell(cell);
             delete_adjacent_cells(grid, cell.row, cell.col, grid[cell.row][cell.col]);
-            falling_cells(grid);
+            down_falling_cells(grid);
+            left_falling_cells(grid);
         }
     }
 };
